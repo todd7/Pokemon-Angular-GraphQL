@@ -8,19 +8,25 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { FullComponent } from './layouts/full/full.component';
 import { HeaderComponent } from './layouts/full/header/header.component';
+import { PokemonsComponent } from './pokemons/pokemons.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     FullComponent,
-    HeaderComponent
+    HeaderComponent,
+    PokemonsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    SharedModule
+    SharedModule,
+    GraphQLModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

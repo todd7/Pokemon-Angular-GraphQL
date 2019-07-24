@@ -1,0 +1,20 @@
+<section>
+  <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <mat-card class="poke-card" *ngFor="let pokemon of pokemons" fxFlex="20">
+      <mat-card-header>
+        <mat-card-title>#{{pokemon.number}} {{pokemon.name}}</mat-card-title>
+      </mat-card-header>
+
+      <ng-container *ngIf="pokemon.image">
+        <img mat-card-image class="poke-image" [src]="pokemon?.image" alt="Photo of a Shiba Inu">
+      </ng-container>
+      <mat-card-content>
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip *ngFor="let type of pokemon.types">
+            {{type}}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
