@@ -10,7 +10,7 @@
       </ng-container>
       <mat-card-content>
         <mat-chip-list aria-label="Fish selection">
-          <mat-chip *ngFor="let type of pokemon.types">
+          <mat-chip *ngFor="let type of pokemon.types" [ngClass]="type">
             {{type}}
           </mat-chip>
         </mat-chip-list>
