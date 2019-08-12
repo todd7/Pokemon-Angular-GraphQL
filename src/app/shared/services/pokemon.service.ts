@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { POKE_RESUME_QUERY, Pokemons } from './pokemon.graphql';
+import { POKE_RESUME_QUERY, PokemonsQuery, POKEMON_QUERY, PokemonQuery } from './pokemon.graphql';
 import { PokeResume } from '../models/poke-resume.model';
+import { Pokemon } from '../models/pokemon.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +18,30 @@ export class PokemonService {
 
   catchEmAll(): Observable<PokeResume[]> {
 
-    return this.apollo.query<Pokemons>({
+    return this.apollo.query<PokemonsQuery>({
       query: POKE_RESUME_QUERY,
       variables: {
         first: 151
       }
     }).pipe(
-        map(res => res.data.pokemons)
+      map(res => res.data.pokemons)
     );
 
   }
+
+  iChooseYou(pokemonName: string): Observable<Pokemon> {
+
+    return this.apollo.query<PokemonQuery>({
+      query: POKEMON_QUERY,
+      variables: {
+        name: pokemonName
+      }
+    }).pipe(
+      map(res => res.data.pokemon)
+    );
+
+  }
+
+
 
 }

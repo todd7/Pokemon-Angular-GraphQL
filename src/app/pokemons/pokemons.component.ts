@@ -36,7 +36,6 @@ export class PokemonsComponent implements OnInit, OnDestroy {
     .catchEmAll()
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(res => {
-      console.log(res)
       this.pokemons = res;
     });
 

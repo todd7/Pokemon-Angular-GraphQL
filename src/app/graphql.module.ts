@@ -1,12 +1,32 @@
-import {NgModule} from '@angular/core';
-import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
+import { NgModule } from '@angular/core';
+
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink } from 'apollo-link';
+import { onError } from 'apollo-link-error';
 
 const uri = 'https://graphql-pokemon.now.sh/';
+
+const linkError = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message, locations, path }) => {
+      console.log('Message:', message);
+      console.log('Location:', locations);
+      console.log('Path:', path);
+    });
+  }
+
+  if (networkError) { console.log(networkError); }
+});
+
+
 export function createApollo(httpLink: HttpLink) {
   return {
-    link: httpLink.create({uri}),
+    link: ApolloLink.from([
+      linkError,
+      httpLink.create({ uri }),
+    ]),
     cache: new InMemoryCache(),
   };
 }
@@ -21,4 +41,4 @@ export function createApollo(httpLink: HttpLink) {
     },
   ],
 })
-export class GraphQLModule {}
+export class GraphQLModule { }

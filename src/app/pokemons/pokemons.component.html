@@ -1,6 +1,7 @@
 <section>
   <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-sm="10px">
-    <mat-card class="poke-card" *ngFor="let pokemon of pokemons" fxFlex.xs="95" fxFlex.gt-md="20" fxFlex.gt-lg="15">
+    <mat-card class="poke-card" *ngFor="let pokemon of pokemons" fxFlex.xs="95" fxFlex.gt-md="20" fxFlex.gt-lg="15"
+      [routerLink]="[ '/pokemon', pokemon.name ]">
       <mat-card-header>
         <mat-card-title>#{{pokemon.number}} {{pokemon.name}}</mat-card-title>
       </mat-card-header>
@@ -10,7 +11,7 @@
       </ng-container>
       <mat-card-content>
         <mat-chip-list aria-label="Fish selection">
-          <mat-chip *ngFor="let type of pokemon.types" [class]="type">
+          <mat-chip *ngFor="let type of pokemon.types" [ngClass]="type">
             {{type}}
           </mat-chip>
         </mat-chip-list>
