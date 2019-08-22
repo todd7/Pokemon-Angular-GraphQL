@@ -15,6 +15,8 @@ export class PokemonsComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<object> = new Subject();
 
+  loader = false;
+
   pokemons: PokeResume[] = [];
 
   constructor(
@@ -22,6 +24,9 @@ export class PokemonsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+
+    this.loader = true;
+
     this.catchEmAll();
   }
 
@@ -32,12 +37,17 @@ export class PokemonsComponent implements OnInit, OnDestroy {
 
   catchEmAll() {
 
+    this.loader = true;
+
     this.pokeService
-    .catchEmAll()
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(res => {
-      this.pokemons = res;
-    });
+      .catchEmAll()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(res => {
+        this.pokemons = res;
+        this.loader = false;
+      }, () => {
+        this.loader = false;
+      });
 
   }
 

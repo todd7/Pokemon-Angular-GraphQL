@@ -1,21 +1,27 @@
 <section>
   <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-sm="10px">
-    <mat-card class="poke-card" *ngFor="let pokemon of pokemons" fxFlex.xs="95" fxFlex.gt-md="20" fxFlex.gt-lg="15"
-      [routerLink]="[ '/pokemon', pokemon.name ]">
-      <mat-card-header>
-        <mat-card-title>#{{pokemon.number}} {{pokemon.name}}</mat-card-title>
-      </mat-card-header>
 
-      <ng-container *ngIf="pokemon.image">
-        <img mat-card-image class="poke-image" [src]="pokemon?.image" alt="Photo of a Shiba Inu">
-      </ng-container>
-      <mat-card-content>
-        <mat-chip-list aria-label="Fish selection">
-          <mat-chip *ngFor="let type of pokemon.types" [ngClass]="type">
-            {{type}}
-          </mat-chip>
-        </mat-chip-list>
-      </mat-card-content>
-    </mat-card>
+    <poke-loader *ngIf="loader"></poke-loader>
+
+    <ng-container *ngIf="!loader">
+      <mat-card class="poke-card" *ngFor="let pokemon of pokemons" fxFlex.xs="95" fxFlex.gt-md="20" fxFlex.gt-lg="15"
+        [routerLink]="[ '/pokemon', pokemon.name ]">
+        <mat-card-header>
+          <mat-card-title>#{{pokemon.number}} {{pokemon.name}}</mat-card-title>
+        </mat-card-header>
+
+        <ng-container *ngIf="pokemon.image">
+          <img mat-card-image class="poke-image" [src]="pokemon?.image" alt="Photo of a Shiba Inu">
+        </ng-container>
+        <mat-card-content>
+          <mat-chip-list aria-label="Fish selection">
+            <mat-chip *ngFor="let type of pokemon.types" [ngClass]="type">
+              {{type}}
+            </mat-chip>
+          </mat-chip-list>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+
   </div>
 </section>
