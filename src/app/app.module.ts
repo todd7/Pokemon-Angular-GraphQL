@@ -12,6 +12,7 @@ import { PokemonsComponent } from './pokemons/pokemons.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { PokeInformationComponent } from './pokemon/poke-information/poke-information.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     FullComponent,
     HeaderComponent,
     PokemonsComponent,
-    PokemonComponent
+    PokemonComponent,
+    PokeInformationComponent
   ],
   imports: [
     BrowserModule,

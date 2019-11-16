@@ -17,7 +17,6 @@ export class PokemonService {
   ) { }
 
   catchEmAll(): Observable<PokeResume[]> {
-
     return this.apollo.query<PokemonsQuery>({
       query: POKE_RESUME_QUERY,
       variables: {
@@ -26,20 +25,17 @@ export class PokemonService {
     }).pipe(
       map(res => res.data.pokemons)
     );
-
   }
 
-  iChooseYou(pokemonName: string): Observable<Pokemon> {
-
+  iChooseYou(name: string): Observable<Pokemon> {
     return this.apollo.query<PokemonQuery>({
       query: POKEMON_QUERY,
       variables: {
-        name: pokemonName
+        name
       }
     }).pipe(
       map(res => res.data.pokemon)
     );
-
   }
 
 

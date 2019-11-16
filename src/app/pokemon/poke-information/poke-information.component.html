@@ -1,0 +1,58 @@
+<mat-list *ngIf="pokemon">
+  <h3 mat-subheader class="sub">Classification</h3>
+  <mat-list-item>
+    <h4 mat-line class="info">{{pokemon.classification}} </h4>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+  <h3 mat-subheader class="sub">Measurement</h3>
+  <mat-list-item>
+    <h4 mat-line class="info"> Minimum Weight: {{pokemon.weight.minimum}} </h4>
+    <h4 mat-line class="info"> Maximum Weight: {{pokemon.weight.maximum}} </h4>
+    <h4 mat-line class="info"> Minimum Height: {{pokemon.height.minimum}} </h4>
+    <h4 mat-line class="info"> Maximum Height: {{pokemon.height.maximum}} </h4>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+  <h3 mat-subheader class="sub">Resistant</h3>
+  <mat-list-item>
+    <mat-chip-list mat-line>
+      <mat-chip *ngFor="let resistant of pokemon.resistant" [ngClass]="resistant">
+        {{resistant}}
+      </mat-chip>
+    </mat-chip-list>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+  <h3 mat-subheader class="sub">Weaknesses</h3>
+  <mat-list-item>
+    <mat-chip-list mat-line>
+      <mat-chip *ngFor="let weaknesses of pokemon.weaknesses" [ngClass]="weaknesses">
+        {{weaknesses}}
+      </mat-chip>
+    </mat-chip-list>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+  <h3 mat-subheader class="sub">Attacks</h3>
+  <mat-list-item>
+    <h4 mat-line class="attacks">Fast</h4>
+    <table mat-line>
+      <tr *ngFor="let fastAttack of pokemon.attacks.fast">
+        <td class="info">Name: {{fastAttack.name}}</td>
+        <td class="info">Type: {{fastAttack.type}}</td>
+        <td class="info">Damage: {{fastAttack.damage}}</td>
+      </tr>
+    </table>
+
+    <h4 mat-line class="attacks">Special</h4>
+    <table mat-line>
+      <tr *ngFor="let specialAttack of pokemon.attacks.special">
+        <td class="info">Name: {{specialAttack.name}}</td>
+        <td class="info">Type: {{specialAttack.type}}</td>
+        <td class="info">Damage: {{specialAttack.damage}}</td>
+      </tr>
+    </table>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+</mat-list>

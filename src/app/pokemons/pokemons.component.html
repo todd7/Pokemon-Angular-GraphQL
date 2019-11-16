@@ -11,10 +11,10 @@
         </mat-card-header>
 
         <ng-container *ngIf="pokemon.image">
-          <img mat-card-image class="poke-image" [src]="pokemon?.image" alt="Photo of a Shiba Inu">
+          <img mat-card-image class="poke-image" [src]="pokemon?.image">
         </ng-container>
         <mat-card-content>
-          <mat-chip-list aria-label="Fish selection">
+          <mat-chip-list>
             <mat-chip *ngFor="let type of pokemon.types" [ngClass]="type">
               {{type}}
             </mat-chip>

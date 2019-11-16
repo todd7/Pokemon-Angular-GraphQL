@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subject } from 'rxjs';
-
-import { PokemonService } from '../shared/services/pokemon.service';
-import { takeUntil } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { PokeResume } from '../shared/models/poke-resume.model';
+import { PokemonService } from '../shared/services/pokemon.service';
 
 @Component({
   selector: 'app-pokemons',
@@ -13,7 +11,7 @@ import { PokeResume } from '../shared/models/poke-resume.model';
 })
 export class PokemonsComponent implements OnInit, OnDestroy {
 
-  private ngUnsubscribe: Subject<object> = new Subject();
+  sub: Subscription;
 
   loader = false;
 
@@ -24,31 +22,26 @@ export class PokemonsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
     this.loader = true;
 
     this.catchEmAll();
   }
 
   ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.sub.unsubscribe();
   }
 
   catchEmAll() {
-
     this.loader = true;
 
-    this.pokeService
+    this.sub = this.pokeService
       .catchEmAll()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(res => {
-        this.pokemons = res;
+      .subscribe(pokemons => {
+        this.pokemons = pokemons;
         this.loader = false;
       }, () => {
         this.loader = false;
       });
-
   }
 
 }

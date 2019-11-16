@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { PokemonService } from '../shared/services/pokemon.service';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Pokemon } from '../shared/models/pokemon.model';
+import { PokemonService } from '../shared/services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon',
@@ -13,7 +13,9 @@ import { Pokemon } from '../shared/models/pokemon.model';
 })
 export class PokemonComponent implements OnInit, OnDestroy {
 
-  private ngUnsubscribe: Subject<object> = new Subject();
+  sub: Subscription;
+
+  loader = false;
 
   pokemon: Pokemon;
 
@@ -23,28 +25,25 @@ export class PokemonComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.loader = true;
 
-    this.route.params.subscribe(routeParams => {
-      this.iChooseYou(routeParams.name);
-    });
+    const pokeObs = this.route.paramMap
+      .pipe(
+        switchMap(params => {
+          const name = params.get('name');
 
+          return this.pokeService.iChooseYou(name);
+        })
+      );
+
+    this.sub = pokeObs
+      .subscribe(pokemon => {
+        this.pokemon = pokemon;
+        this.loader = false;
+      });
   }
 
   ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.sub.unsubscribe();
   }
-
-  iChooseYou(pokemonName: string) {
-
-    this.pokeService
-      .iChooseYou(pokemonName)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(res => {
-        this.pokemon = res;
-        console.log(this.pokemon);
-      });
-
-  }
-
 }
